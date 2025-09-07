@@ -50,75 +50,124 @@ function Dashboard() {
   };
 
   return (
-    <div>
-      {/* Navbar */}
-      <div className="navbar">
-        <div className="navbar-logo">Expense Tracker</div>
-        <div>
-          <a className="navbar-link" href="#">Dashboard</a>
-          <a className="navbar-link" href="#">Reports</a>
+    <div className="dashboard-container">
+      {/* Dashboard Header */}
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">
+          <span className="title-icon">📊</span>
+          Financial Dashboard
+        </h1>
+        <p className="dashboard-subtitle">Track your income and expenses efficiently</p>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="summary-section">
+        <div className="summary-grid">
+          <div className="summary-card income-card">
+            <div className="card-icon">📈</div>
+            <div className="card-content">
+              <h3>Total Income</h3>
+              <p className="amount">${summary.income.toFixed(2)}</p>
+            </div>
+          </div>
+          
+          <div className="summary-card expense-card">
+            <div className="card-icon">📉</div>
+            <div className="card-content">
+              <h3>Total Expenses</h3>
+              <p className="amount">${summary.expense.toFixed(2)}</p>
+            </div>
+          </div>
+          
+          <div className="summary-card balance-card">
+            <div className="card-icon">💰</div>
+            <div className="card-content">
+              <h3>Net Balance</h3>
+              <p className="amount">${summary.balance.toFixed(2)}</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Dashboard Wrapper */}
-      <div className="dashboard-wrapper">
-
-        {/* Add Expense Form (TOP) */}
-        <AddExpense onAdd={handleAddTransaction} />
-
-        <h1 className="dashboard-title">My Dashboard</h1>
-
-        {/* Summary Cards */}
-        <div className="summary-cards">
-          <div className="card income-card">
-            <h3>Income</h3>
-            <p>${summary.income.toFixed(2)}</p>
-          </div>
-          <div className="card expense-card">
-            <h3>Expense</h3>
-            <p>${summary.expense.toFixed(2)}</p>
-          </div>
-          <div className="card balance-card">
-            <h3>Balance</h3>
-            <p>${summary.balance.toFixed(2)}</p>
-          </div>
+      {/* Main Content Grid */}
+      <div className="dashboard-grid">
+        {/* Add Transaction Form */}
+        <div className="dashboard-section">
+          <AddExpense onAdd={handleAddTransaction} />
         </div>
 
         {/* Chart Placeholder */}
-        <div className="charts-container">
-          <div className="chart-box">
-            <h3>Monthly Summary Chart</h3>
-            <p>(Chart goes here)</p>
+        <div className="dashboard-section chart-section">
+          <div className="section-header">
+            <h3>
+              <span className="section-icon">📊</span>
+              Financial Overview
+            </h3>
+          </div>
+          <div className="chart-placeholder">
+            <div className="chart-content">
+              <div className="chart-mock">
+                <div className="bar income-bar" style={{height: `${Math.min((summary.income / Math.max(summary.income, summary.expense)) * 100, 100)}%`}}></div>
+                <div className="bar expense-bar" style={{height: `${Math.min((summary.expense / Math.max(summary.income, summary.expense)) * 100, 100)}%`}}></div>
+              </div>
+              <div className="chart-labels">
+                <span className="chart-label income-label">Income</span>
+                <span className="chart-label expense-label">Expenses</span>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Transactions Table */}
-        <div className="transaction-list">
-          <h2>Transactions</h2>
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Type</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Amount ($)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((t) => (
-                <tr key={t.id}>
-                  <td>{t.id}</td>
-                  <td className={t.type === "INCOME" ? "income-text" : "expense-text"}>
-                    {t.type}
-                  </td>
-                  <td>{t.category}</td>
-                  <td>{t.description || "-"}</td>
-                  <td>${t.amount.toFixed(2)}</td>
+        <div className="dashboard-section transactions-section">
+          <div className="section-header">
+            <h3>
+              <span className="section-icon">📝</span>
+              Recent Transactions
+            </h3>
+            <span className="transaction-count">{transactions.length} total</span>
+          </div>
+          
+          <div className="table-container">
+            <table className="modern-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Category</th>
+                  <th>Description</th>
+                  <th>Amount</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {transactions.length === 0 ? (
+                  <tr>
+                    <td colspan="4" className="no-data">
+                      <div className="empty-state">
+                        <span className="empty-icon">📋</span>
+                        <p>No transactions yet</p>
+                        <small>Add your first transaction to get started</small>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  transactions.slice(0, 10).map((t, index) => (
+                    <tr key={t.id || index}>
+                      <td>
+                        <span className={`type-badge ${t.type === "INCOME" ? "income-badge" : "expense-badge"}`}>
+                          {t.type === "INCOME" ? "📈" : "📉"} {t.type}
+                        </span>
+                      </td>
+                      <td className="category-cell">{t.category}</td>
+                      <td className="description-cell">{t.description || "No description"}</td>
+                      <td className={`amount-cell ${t.type === "INCOME" ? "income-amount" : "expense-amount"}`}>
+                        ${t.amount.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

@@ -38,7 +38,10 @@ function AddExpense({ onAdd }) {
 
   return (
     <div className="add-expense-wrapper">
-      <h2>Add New Transaction</h2>
+      <h2>
+        <span className="section-icon">💳</span>
+        Add New Transaction
+      </h2>
       <form onSubmit={handleSubmit} className="add-expense-form">
         <input
           type="number"
@@ -48,18 +51,22 @@ function AddExpense({ onAdd }) {
           required
         />
 
+        <select
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          required
+        >
+          <option value="EXPENSE">💸 Expense</option>
+          <option value="INCOME">💰 Income</option>
+        </select>
+
         <input
           type="text"
-          placeholder="Category"
+          placeholder="Category (e.g., Food, Transportation)"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
         />
-
-        <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="EXPENSE">Expense</option>
-          <option value="INCOME">Income</option>
-        </select>
 
         <input
           type="text"
@@ -68,7 +75,9 @@ function AddExpense({ onAdd }) {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <button type="submit">Add Transaction</button>
+        <button type="submit">
+          ➕ Add Transaction
+        </button>
       </form>
     </div>
   );

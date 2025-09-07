@@ -1,37 +1,102 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Register() {
+function Register({ onRegistrationSuccess }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    // later connect axios POST to backend /register
-    alert(`Registered ${username}`);
+    
+    if (!username || !password) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Here you would normally make an API call to your backend
+      // For now, we'll simulate a successful registration
+      
+      alert(`Welcome ${username}! Registration successful.`);
+      
+      // Call the success handler from App.jsx
+      onRegistrationSuccess();
+      
+      // Navigate to dashboard
+      navigate("/dashboard");
+      
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert("Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Register</h2>
-      <form onSubmit={handleRegister} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border rounded"
-        />
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-          Register
-        </button>
-      </form>
+    <div className="register-container">
+      <div className="register-card">
+        <div className="register-header">
+          <h2>
+            <span className="register-icon">👋</span>
+            Welcome to ExpenseTracker
+          </h2>
+          <p>Please register to start tracking your expenses</p>
+        </div>
+        
+        <form onSubmit={handleRegister} className="register-form">
+          <div className="form-group">
+            <input
+              type="text"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              disabled={isLoading}
+            />
+          </div>
+          
+          <div className="form-group">
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={isLoading}
+            />
+          </div>
+          
+          <button 
+            type="submit" 
+            className="register-button"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <span className="loading-spinner">⏳</span>
+                Registering...
+              </>
+            ) : (
+              <>
+                <span className="button-icon">🚀</span>
+                Get Started
+              </>
+            )}
+          </button>
+        </form>
+        
+        <div className="register-footer">
+          <p>Already have an account? You can proceed to dashboard after registration.</p>
+        </div>
+      </div>
     </div>
   );
 }
