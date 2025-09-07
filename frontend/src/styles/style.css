@@ -525,6 +525,7 @@ body, html {
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  color: #000000;
 }
 
 .add-expense-form input:focus,
@@ -785,6 +786,7 @@ body, html {
   transition: all 0.3s ease;
   background: white;
   box-sizing: border-box;
+  color: #000000;
 }
 
 .form-group input:focus {
