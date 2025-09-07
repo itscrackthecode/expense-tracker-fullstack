@@ -30,10 +30,10 @@ function Dashboard() {
   // Calculate income, expense, and balance
   const calculateSummary = (data) => {
     const income = data
-      .filter(t => t.type === "INCOME")
+      .filter((t) => t.type === "INCOME")
       .reduce((acc, t) => acc + t.amount, 0);
     const expense = data
-      .filter(t => t.type === "EXPENSE")
+      .filter((t) => t.type === "EXPENSE")
       .reduce((acc, t) => acc + t.amount, 0);
     setSummary({
       income,
@@ -62,6 +62,10 @@ function Dashboard() {
 
       {/* Dashboard Wrapper */}
       <div className="dashboard-wrapper">
+
+        {/* Add Expense Form (TOP) */}
+        <AddExpense onAdd={handleAddTransaction} />
+
         <h1 className="dashboard-title">My Dashboard</h1>
 
         {/* Summary Cards */}
@@ -91,7 +95,7 @@ function Dashboard() {
         {/* Transactions Table */}
         <div className="transaction-list">
           <h2>Transactions</h2>
-          <table>
+          <table className="styled-table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -105,18 +109,17 @@ function Dashboard() {
               {transactions.map((t) => (
                 <tr key={t.id}>
                   <td>{t.id}</td>
-                  <td>{t.type}</td>
+                  <td className={t.type === "INCOME" ? "income-text" : "expense-text"}>
+                    {t.type}
+                  </td>
                   <td>{t.category}</td>
                   <td>{t.description || "-"}</td>
-                  <td>{t.amount.toFixed(2)}</td>
+                  <td>${t.amount.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-
-        {/* Add Expense Form */}
-        <AddExpense onAdd={handleAddTransaction} />
       </div>
     </div>
   );

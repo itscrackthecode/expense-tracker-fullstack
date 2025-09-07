@@ -1,30 +1,21 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
-import Dashboard from "./components/Dashboard.jsx";
 import "./styles/style.css";
 
 function App() {
   return (
-    <div>
-      {/* Navbar */}
+    <div className="app-wrapper">
+      {/* Navbar always visible */}
       <Navbar />
 
-      {/* Quick links under navbar */}
-      <nav className="navbar-links">
-        <Link className="navbar-link" to="/">Home</Link>
-        <Link className="navbar-link" to="/register">Register</Link>
-        <Link className="navbar-link" to="/dashboard">Dashboard</Link>
-      </nav>
-
-      {/* Page Content */}
+      {/* Page Routes */}
       <div className="page-wrapper">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </div>
