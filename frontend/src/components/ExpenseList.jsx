@@ -6,7 +6,7 @@ function ExpenseList() {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/transactions");
+      const res = await axios.get("https://expensebackend-2zgp.onrender.com/api/transactions");
       setTransactions(res.data);
     } catch (err) {
       console.error(err);

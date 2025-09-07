@@ -9,7 +9,7 @@ function ExpenseForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/transactions", {
+      await axios.post("https://expensebackend-2zgp.onrender.com/api/transactions", {
         title,
         amount,
         type,

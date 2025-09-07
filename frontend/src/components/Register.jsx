@@ -8,7 +8,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8080/register", { username, password });
+      await axios.post("https://expensebackend-2zgp.onrender.com/register", { username, password });
       alert("User registered successfully!");
     } catch (err) {
       alert("Error: " + err.response.data);

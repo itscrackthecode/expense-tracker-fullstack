@@ -17,7 +17,7 @@ function AddExpense({ onAdd }) {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/transactions", {
+      const response = await axios.post("https://expensebackend-2zgp.onrender.com/api/transactions", {
         amount: parseFloat(amount),
         category,
         type,
