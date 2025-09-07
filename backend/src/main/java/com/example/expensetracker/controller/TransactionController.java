@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/transactions")
-@CrossOrigin(origins = "http://localhost:5173") // adjust port if needed
+@CrossOrigin(origins = "*") // allow all origins
 public class TransactionController {
 
     private final TransactionRepository transactionRepository;

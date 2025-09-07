@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5173") // allow frontend
+@CrossOrigin(origins = "*") // allow all origins
 public class UserController {
 
     private List<User> users = new ArrayList<>();
